@@ -1,0 +1,17 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "net.fabricmc.gravestone.mixin",
+  "compatibilityLevel": "JAVA_16",
+  "mixins": [
+    "BarrelBlockEntityMixin",
+    "PlayerEntityMixin_HighPriority",
+    "PlayerEntityMixin_NormalPriority",
+    "ServerPlayerEntityMixin_CopyTo"
+  ],
+  "client": [
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}
