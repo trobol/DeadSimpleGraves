@@ -17,13 +17,13 @@ import net.minecraft.server.network.ServerPlayerEntity;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.command.v1.CommandRegistrationCallback;
 
-public class Gravestone  implements ModInitializer {
+public class DeadSimpleGraves implements ModInitializer {
     public static final ThreadLocal<List<ItemStack>> CAPTURED_DROPS = new ThreadLocal<>();
 
     @Override
     public void onInitialize() {
         CommandRegistrationCallback.EVENT.register((dispatcher, dedicated) -> {
-            dispatcher.register(LiteralArgumentBuilder.<ServerCommandSource>literal("ueaj_restore")
+            dispatcher.register(LiteralArgumentBuilder.<ServerCommandSource>literal("dsg_restore")
                     .then(RequiredArgumentBuilder.<ServerCommandSource, UUID>argument("restore_id", uuid())
                             .executes(context -> {
                                 UUID id = context.getArgument("restore_id", UUID.class);

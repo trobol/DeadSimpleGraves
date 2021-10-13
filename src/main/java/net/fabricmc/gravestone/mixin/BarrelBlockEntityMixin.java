@@ -31,23 +31,23 @@ public abstract class BarrelBlockEntityMixin implements GravestoneOwnerAccess, I
 
     @Inject (method = "readNbt", at = @At ("HEAD"))
     public void readGraveOwner(NbtCompound nbt, CallbackInfo ci) {
-        NbtElement element = nbt.get("ueajs_graves:graveOwnerUuid");
+        NbtElement element = nbt.get("dead_simple_graves:graveOwnerUuid");
         if (element != null) {
             NbtHelper.toUuid(element);
         }
-        int i = nbt.getInt("ueajs_graves:invsize");
+        int i = nbt.getInt("dead_simple_graves:invsize");
         if (i != 0) {
             this.inventory = DefaultedList.ofSize(i, ItemStack.EMPTY);
         }
     }
 
     @Inject (method = "writeNbt", at = @At ("HEAD"))
-    public void writeGraveOwner(NbtCompound nbt, CallbackInfoReturnable<NbtCompound> cir) {
+    public void writeGraveOwner(NbtCompound nbt, CallbackInfo cir) {
         UUID owner = this.ueaj_graveOwner;
         if (owner != null) {
-            nbt.put("ueajs_graves:graveOwnerUuid", NbtHelper.fromUuid(owner));
+            nbt.put("dead_simple_graves:graveOwnerUuid", NbtHelper.fromUuid(owner));
         }
-        nbt.putInt("ueajs_graves:invsize", this.inventory.size());
+        nbt.putInt("dead_simple_graves:invsize", this.inventory.size());
     }
 
     @Inject (method = "createScreenHandler", at = @At ("HEAD"), cancellable = true)

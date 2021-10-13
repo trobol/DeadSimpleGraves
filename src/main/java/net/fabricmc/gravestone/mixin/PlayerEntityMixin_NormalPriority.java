@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
-import net.fabricmc.gravestone.Gravestone;
+import net.fabricmc.gravestone.DeadSimpleGraves;
 import net.fabricmc.gravestone.access.GravestoneOwnerAccess;
 import net.fabricmc.gravestone.access.RestoreAccess;
 import org.spongepowered.asm.mixin.Mixin;
@@ -71,7 +71,7 @@ public abstract class PlayerEntityMixin_NormalPriority extends LivingEntity impl
 
     @Inject (method = "dropInventory", at = @At ("RETURN"))
     public void onDropInventory(CallbackInfo ci) {
-        List<ItemStack> capturedDrops = Gravestone.CAPTURED_DROPS.get();
+        List<ItemStack> capturedDrops = DeadSimpleGraves.CAPTURED_DROPS.get();
         World world = this.getEntityWorld();
         BlockPos deathPos = this.getBlockPos();
         if (world.setBlockState(deathPos, Blocks.BARREL.getDefaultState())) {
@@ -85,18 +85,18 @@ public abstract class PlayerEntityMixin_NormalPriority extends LivingEntity impl
             this.ueaj_restore(capturedDrops);
         }
 
-        Gravestone.CAPTURED_DROPS.remove();
+        DeadSimpleGraves.CAPTURED_DROPS.remove();
     }
 
     @Unique
     public void ueaj_restore(List<ItemStack> capturedDrops) {
         UUID restoreId = UUID.randomUUID();
         this.ueaj_restores.put(restoreId, capturedDrops);
-        this.sendMessage(new LiteralText("/ueaj_restore " + restoreId).styled(s -> s.withClickEvent(new ClickEvent(ClickEvent.Action.SUGGEST_COMMAND,
-                                "/ueaj_restore " + restoreId))
+        this.sendMessage(new LiteralText("/dsg_restore " + restoreId).styled(s -> s.withClickEvent(new ClickEvent(ClickEvent.Action.SUGGEST_COMMAND,
+                                "/dsg_restore " + restoreId))
                         .withHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT,
                                 new LiteralText(
-                                        "/ueaj_restore " + restoreId)))),
+                                        "/dsg_restore " + restoreId)))),
                 false);
     }
 
